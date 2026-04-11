@@ -3,44 +3,127 @@
 #include<string.h> 
 #include<curses.h>
 #include "fun.h" 
-struct admin{  
-    char name[50];
-    char password[10];
-};
-struct user{
-     char name[50];
-     char password[10];
-    
-};
 int main(){
+    char usrname [50];
+    char password[10];
+    char password2[10];
     int n=1;
     printf("Enter\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
+    printf("\n");
     scanf("%d", &n); 
   while( n!= 4 ) 
-{
-   char name[50];
-   char password[10];
-   login(name , password); 
-   unsigned long hash = hashPassword( password); 
-   if( n==1)
-   {
+{ 
+     clearing(usrname );
+     clearing(password);
+     if( n==1) //admin login
+   { 
+      int j=1;
+      loginusrname(usrname );
+      initscr();
+      clear();
+      loginpassword( password ,password2 , j );
+      endwin(); 
+      unsigned long hash = hashPassword( password); 
        FILE* fptr = fopen("admin.txt" , "r");
-      if( ! checkadmin ( fptr , name , hash ) ) 
-      {
-           printf("Wrong username or password\n");
-           printf("Enter (1) to login as Admin and (2) to login as a User and (3) to exit : \n");
+      if( ! checkadmin ( fptr , usrname , hash ) ) 
+      {    
+           printf("Failed to login ----------- Wrong Username or Password\n");
+           printf("Enter\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
+           printf("\n");
            scanf("%d", &n);
            continue ;  
       }
       else 
-      {
-           
+      { 
+          printf("Logined Successfully\n");
+          listadminfunctions();
+          int num;
+          scanf("%d", &num );
+          if(num ==1 )
+          {
+             addBook();
+          }
+
       }
    }
-   
-   printf("Enter (1) to login as Admin and (2) to login as a User and (3) to exit : \n");
-   scanf("%d", &n); 
+   if(n==2) //usr login
+   {  
+      int j=1;
+      loginusrname(usrname);
+      initscr();
+      clear();
+      loginpassword(password , password2 ,j);
+      endwin();
+      unsigned long hash = hashPassword( password); 
+      FILE* fptr = fopen("user.txt", "r" );
+      if( !checkuser( fptr , usrname , hash ))
+      {  
+         printf("Failed to login ----- No user exists with that Username and Password\n");
+         printf("Enter\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
+         printf("\n");
+         scanf("%d", &n);
+         continue ; 
+      }
+      else
+      {
+         printf("Hurray you have logged in\n");
+
+      }
+
+    }
+    if( n == 3 )  //usr signup 
+    {   FILE* fptr = fopen("user.txt", "a+");
+        char usrname[50];
+        printf(" ------------ Creating Account ----------\n");
+        char k;
+        scanf("%c", &k);
+        int found = 1;
+        while( found )
+        {   clearing(usrname);
+            printf("Enter Username : ");
+            fgets( usrname , 50 , stdin );
+            usrname[strlen(usrname) -1] = '\0' ; 
+            found = checkusrname(fptr , usrname );
+            if( found == 1 )
+            {
+                printf("Username already exists. Please try other username\n");
+            }
+            else 
+            {   int ok=0;
+                while( !ok )
+               { 
+                 clearing(password2);
+                 clearing(password);
+                 int j=2 ;   
+                 initscr();
+                 clear();
+                 loginpassword(password , password2 , j );
+                 endwin();
+
+                 if( strcmp(password , password2 ) !=0)
+                   {  
+                      ok = 0;
+                   }    
+                 else 
+                   {  
+                      ok = 1 ; 
+                   }  
+               }
+               fprintf(fptr , "%s,%lu,", usrname , hashPassword(password) );
+               printf("Signed Up Successfully\n" ); 
+               
+               
+                              
+            }
+
+        }
+    }
+
+
+    printf("Enter\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n\n");
+    scanf("%d",&n);
+
 }
-printf("Exited\n");
+printf("Exited\n" );
    
 }
