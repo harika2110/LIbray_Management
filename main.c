@@ -43,8 +43,21 @@ int main(){
           {
              addBook();
           }
+          else if(num == 2 )
+          {
+              removeBook();
+          }
+          else if(num == 3 )
+          {
+              updateBookdetails();
+          }
+          else if(num == 5)
+         {
+            listIssuedBooks();
+         }
 
       }
+      fclose(fptr);
    }
    if(n==2) //usr login
    {  
@@ -69,6 +82,7 @@ int main(){
          printf("Hurray you have logged in\n");
 
       }
+      fclose(fptr);
 
     }
     if( n == 3 )  //usr signup 
@@ -117,6 +131,7 @@ int main(){
             }
 
         }
+        fclose(fptr);
     }
 
 

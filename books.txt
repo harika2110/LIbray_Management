@@ -1,2 +1,2 @@
-Book_id,Book_title,Author,total_copies,Copies_available,
-2,Harika's Book,Harika,2,2
+5,Book_title,Book_author,copies,available
+6,Harika's Book,Harika,12,11
