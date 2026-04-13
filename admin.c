@@ -37,7 +37,7 @@ void listadminfunctions(){
     "(1) to add any Book\n"
     "(2) to remove any Book\n"
     "(3) to update details of any Book\n"
-    "(4) to list Issued Books\n"
+    "(4) to list Issued Books ( in alphabetical order )\n"
     "(5) to logout\n"
      );
     return ; 
@@ -251,6 +251,7 @@ void listIssuedBooks(){
     printf("---------------FUNCTION----LISTING_ISSUED_BOOKS-----------\n");
     char* line = (char*)malloc(100*sizeof(char));
     FILE* fin = fopen("books.txt", "r");
+    FILE* fout = fopen("write.txt" , "w");
     int num=0;
     while( fgets(line ,100, fin) != NULL )
     { 
@@ -268,7 +269,7 @@ void listIssuedBooks(){
         if(copies != available )
         {  
              num++;
-            printf("%s\n", book_name);           
+            fprintf(fout , "%s\n", book_name);           
         }
 
     }
@@ -277,6 +278,11 @@ void listIssuedBooks(){
         printf("No Book is Issued\n");
     }
     fclose(fin);
+    fclose(fout);
+    if(num)
+    {
+        system("sort -t, -k 1 write.txt");
+    }
     free(line);
     return ; 
 }
