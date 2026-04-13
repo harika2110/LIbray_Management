@@ -1,4 +1,4 @@
-Username,Password,No.of books issued ,Total_fine 
-        ,        ,                   ,Book_id,issue_date,return_date,fine_till_now
-Harika,6952326138613,
-Saanvi,7570806491992050,
+Ananya,6383899907,1,0
+Ananya,Harika's Book,13-04-2026,13-04-2026,0
+Harika,6952326138613,1,0
+Harika,Harika's Book,01-04-2026,13-04-2026,25

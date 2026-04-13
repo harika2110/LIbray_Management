@@ -12,3 +12,12 @@ void updateBookdetails();  //done
 void listOverdueBooks();
 void listIssuedBooks();  // done
 void listadminfunctions();
+void displayuser(char* usrname);  //done 
+void issueBook(char* usrname );  //done
+void returnBook(char* usrname); //done 
+void checkAvailability();  //done 
+void calculatefine();  
+void checkDueDate();
+void viewBorrowHistory();
+void notifyDueBooks();
+void listusrfunctions();  

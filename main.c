@@ -80,7 +80,25 @@ int main(){
       else
       {
          printf("Hurray you have logged in\n");
-
+         listusrfunctions();
+         int num;
+         scanf("%d",&num);
+         if(num == 1 )
+         {
+            displayuser(usrname);
+         }
+         else if(num == 4 )
+         {
+            checkAvailability(); 
+         }
+         else if(num == 2)
+         {
+            issueBook(usrname );
+         }
+         else if( num == 3)
+         {
+            returnBook(usrname);
+         }
       }
       fclose(fptr);
 
@@ -123,7 +141,8 @@ int main(){
                       ok = 1 ; 
                    }  
                }
-               fprintf(fptr , "%s,%lu,", usrname , hashPassword(password) );
+               int k=0;
+               fprintf(fptr , "%s,%lu,%d,%d\n", usrname , hashPassword(password),k,k );
                printf("Signed Up Successfully\n" ); 
                
                
