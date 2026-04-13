@@ -8,7 +8,7 @@ int main(){
     char password[10];
     char password2[10];
     int n=1;
-    printf("Enter\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
+    printf("Enter-----\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
     printf("\n");
     scanf("%d", &n); 
   while( n!= 4 ) 
@@ -28,7 +28,7 @@ int main(){
       if( ! checkadmin ( fptr , usrname , hash ) ) 
       {    
            printf("Failed to login ----------- Wrong Username or Password\n");
-           printf("Enter\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
+           printf("\nEnter-----\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
            printf("\n");
            scanf("%d", &n);
            continue ;  
@@ -36,6 +36,7 @@ int main(){
       else 
       { 
           printf("Logined Successfully\n");
+          adminmenu : 
           listadminfunctions();
           int num;
           scanf("%d", &num );
@@ -51,10 +52,14 @@ int main(){
           {
               updateBookdetails();
           }
-          else if(num == 5)
+          else if(num == 4)
          {
             listIssuedBooks();
          }
+         if(num != 5)
+         {
+            goto adminmenu ; 
+         }   
 
       }
       fclose(fptr);
@@ -72,7 +77,7 @@ int main(){
       if( !checkuser( fptr , usrname , hash ))
       {  
          printf("Failed to login ----- No user exists with that Username and Password\n");
-         printf("Enter\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
+         printf("\nEnter-----\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
          printf("\n");
          scanf("%d", &n);
          continue ; 
@@ -80,6 +85,8 @@ int main(){
       else
       {
          printf("Hurray you have logged in\n");
+         usrmenu : 
+         updateuserprofile(usrname);
          listusrfunctions();
          int num;
          scanf("%d",&num);
@@ -98,6 +105,22 @@ int main(){
          else if( num == 3)
          {
             returnBook(usrname);
+         }
+         else if(num == 5 )
+         {
+            display_available_books(); 
+         }
+         else if(num == 6)
+         {
+            renewBook(usrname);
+         }
+         else if(num == 7)
+         {
+            displayDueBooks(usrname);
+         }
+         if(num != 8)
+         {
+            goto usrmenu;
          }
       }
       fclose(fptr);
@@ -154,7 +177,7 @@ int main(){
     }
 
 
-    printf("Enter\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n\n");
+    printf("\nEnter-----\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n\n");
     scanf("%d",&n);
 
 }

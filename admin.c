@@ -4,7 +4,7 @@
 #include "fun.h"
 int checkadmin( FILE* fptr , char* name, unsigned long hash ) 
 { 
-    char line[100];
+    char* line = (char*)malloc(100*sizeof(char));
     int found=0;
     while( fgets( line , 100 , fptr) != NULL )
     {
@@ -29,15 +29,16 @@ int checkadmin( FILE* fptr , char* name, unsigned long hash )
             break ; 
         }   
     }
+    free(line);
     return found ; 
 }
 void listadminfunctions(){
-    printf("Enter\n"
+    printf("\nEnter-----\n"
     "(1) to add any Book\n"
     "(2) to remove any Book\n"
     "(3) to update details of any Book\n"
-    "(4) to list Overdue Books\n"
-    "(5) to list Issued Books\n"
+    "(4) to list Issued Books\n"
+    "(5) to logout\n"
      );
     return ; 
    
@@ -48,15 +49,13 @@ void addBook()
     FILE* fptr = fopen("books.txt", "a+");
     int id=1;
     char* line = (char*)malloc(100*sizeof(char));
-    while( fgets(line , 100 , fptr) != NULL )
-    {
-        id++;
-    }
+   
     char help;
     char book_name[20];
-    char author_name[20];
+    char author_name[20];  int found;
     int copies;
     label : 
+    found =0;
     printf("Enter Book name : ");
     scanf("%c" , &help);
     fgets( book_name , 20 , stdin );
@@ -67,8 +66,18 @@ void addBook()
     printf("Enter the no.of copies of the book : ");
     scanf("%d",&copies);
     printf("Are all details correct [y/n] ? ");
+     while( fgets(line , 100 , fptr) != NULL )
+    {   
+        char* temp = strtok(line , ",");
+        temp = strtok(NULL , ",");
+        if( strcmp(book_name , temp ) == 0)
+        {
+             found = 1;
+        }
+        id++;
+    }
     scanf(" %c", &help);
-    if( help == 'y')
+    if( help == 'y' && found != 1 )
     { 
         fprintf(fptr , "%d,%s,%s,%d,%d\n" , id, book_name , author_name , copies , copies );
     }
@@ -76,10 +85,22 @@ void addBook()
     {
         clearing(book_name);
         clearing(author_name);
-        goto label;
+        if( found == 1 )
+        {
+            printf("The book already exists\n");
+        }
+        printf("Do you want to try adding book again [y/n]? ");
+        char k;
+        scanf(" %c" , &k);
+        if( k=='y')  
+        {
+            goto label ; 
+        }
     }
-    printf("Book added Successfully");
+    printf("Book added Successfully\n\n");
+    
     fclose(fptr);
+    free(line);
     return ;
 }
 void removeBook(){
@@ -90,7 +111,7 @@ void removeBook(){
     char book_name[20];
     char help;
     int num=1;
-    
+    char* line = (char*) malloc( 100*sizeof(char)); 
     label :
     scanf("%c", &help);
     num=1;
@@ -101,10 +122,18 @@ void removeBook(){
     scanf(" %c", &help); 
     if( help == 'n' )
     {   clearing(book_name);
-        goto label; 
+        printf("Do you want to try deleting any other book [y/n] ? ");
+        scanf(" %c", &help);
+        if( help == 'y')
+        {  goto label; }
+        else 
+        {
+            free(line);
+            return ; 
+        }
     }
     else 
-    {   char* line = (char*) malloc( 100*sizeof(char)); 
+    {   
         FILE* fin = fopen("books.txt" , "r");
         FILE* fout = fopen("new.txt" , "w" );
         while( fgets( line , 100, fin ) != NULL)
@@ -125,19 +154,22 @@ void removeBook(){
         }
         fclose(fin);
         fclose(fout);
-        free(line);
         system("rm books.txt");
         system("mv new.txt books.txt");     
     }
     if( found != 1 )
     {
         printf("No book exists with that title\n");
-        goto label;
+        printf("Do you want to try deleting any other book [y/n] ? ");
+        scanf(" %c", &help);
+        if( help == 'y')
+        {  goto label; }
     }
     else 
     {
         printf("Book is removed Successfully\n");
     }
+    free(line);
     return ; 
      
 }
@@ -160,16 +192,19 @@ void updateBookdetails()
     printf("Enter the name of the Author : ");
     fgets(author_name , 20 , stdin );
     author_name[strlen(author_name)-1] = '\0';
-    printf("Enter the total no.of copies : \n");
+    printf("Enter the total no.of copies : ");
     scanf("%d",&copies);
-    printf("Enter the available no.of copies\n");
+    printf("Enter the available no.of copies : ");
     scanf("%d", &available);
     printf("Do you really want to update the details of the book named %s [y/n] ? " , book_name );
     scanf(" %c", &help); 
     num = 1;
     if( help == 'n' )
     {   clearing(book_name);
-        goto label; 
+        printf("Do you want to try updating again [y/n] ? ");
+        scanf(" %c", &help);
+        if( help == 'y')
+        {  goto label; }
     }
     else 
     {   char* line = (char*) malloc( 100*sizeof(char)); 
@@ -201,7 +236,10 @@ void updateBookdetails()
     if( found != 1 )
     {
         printf("No book exists with that title\n");
-        goto label;
+        printf("Do you want to try deleting any other book [y/n] ? ");
+        scanf(" %c", &help);
+        if( help == 'y')
+        {  goto label; }
     }
     else 
     {

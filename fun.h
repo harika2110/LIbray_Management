@@ -9,15 +9,14 @@ int checkusrname(FILE* fptr ,  char* name );   //done
 void addBook();  //done  
 void removeBook();  //done
 void updateBookdetails();  //done
-void listOverdueBooks();
 void listIssuedBooks();  // done
-void listadminfunctions();
+void listadminfunctions(); //done
 void displayuser(char* usrname);  //done 
 void issueBook(char* usrname );  //done
 void returnBook(char* usrname); //done 
 void checkAvailability();  //done 
-void calculatefine();  
-void checkDueDate();
-void viewBorrowHistory();
-void notifyDueBooks();
-void listusrfunctions();  
+void updateuserprofile(char* usrname); //done
+void display_available_books(); //done 
+void displayDueBooks(char* usrname);  //done
+void listusrfunctions();  //done
+void renewBook(char* usrname); //done 
