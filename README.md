@@ -26,6 +26,8 @@ Steps:
   make
 3.Execute the program:
 ./a.out
+4.To remove all the .o files created run the command :
+make clean
 
 Running on Windows
 You need to install the ncurses library manually.
