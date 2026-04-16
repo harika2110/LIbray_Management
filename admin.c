@@ -4,7 +4,7 @@
 #include "fun.h"
 int checkadmin( FILE* fptr , char* name, unsigned long hash ) 
 { 
-    char* line = (char*)malloc(100*sizeof(char));
+    char* line = (char*)malloc(200*sizeof(char));
     int found=0;
     while( fgets( line , 100 , fptr) != NULL )
     {
@@ -49,11 +49,11 @@ void addBook()
     printf("--------FUNCTION -------ADDING_BOOK-------\n");
     FILE* fptr = fopen("books.txt", "a+");
     int id=1;
-    char* line = (char*)malloc(100*sizeof(char));
+    char* line = (char*)malloc(200*sizeof(char));
    
     char help;
-    char book_name[20];
-    char author_name[20];  int found;
+    char book_name[50];
+    char author_name[50];  int found;
     int copies;
     label : 
     found =0;
@@ -109,15 +109,15 @@ void removeBook(){
     printf("-----------FUNCTION------REMOVING_BOOK-------\n");
     
     int found = 0;
-    char book_name[20];
+    char book_name[50];
     char help;
     int num=1;
-    char* line = (char*) malloc( 100*sizeof(char)); 
+    char* line = (char*) malloc( 200*sizeof(char)); 
     label :
     scanf("%c", &help);
     num=1;
     printf("Enter the name of the Book : ");
-    fgets( book_name , 20 , stdin );
+    fgets( book_name , 50 , stdin );
     book_name[strlen(book_name)-1] = '\0' ; 
     printf("Do you really want to delete the book named %s [y/n] ? " , book_name );
     scanf(" %c", &help); 
@@ -137,7 +137,7 @@ void removeBook(){
     {   
         FILE* fin = fopen("books.txt" , "r");
         FILE* fout = fopen("new.txt" , "w" );
-        while( fgets( line , 100, fin ) != NULL)
+        while( fgets( line , 200, fin ) != NULL)
         {  
             char* temp = strtok(line,",");
                   temp = strtok(NULL , ",");
@@ -178,8 +178,8 @@ void updateBookdetails()
 {
     printf("-----------FUNCTION------UPDATING_BOOK_DETAILS--------\n");
     int found = 0;
-    char book_name[20];
-    char author_name[20];
+    char book_name[50];
+    char author_name[50];
     int copies;
     int available;
     char help;
@@ -188,10 +188,10 @@ void updateBookdetails()
     label :
     scanf("%c", &help);
     printf("Enter the name of the Book : ");
-    fgets( book_name , 20 , stdin );
+    fgets( book_name , 50 , stdin );
     book_name[strlen(book_name)-1] = '\0' ; 
     printf("Enter the name of the Author : ");
-    fgets(author_name , 20 , stdin );
+    fgets(author_name , 50 , stdin );
     author_name[strlen(author_name)-1] = '\0';
     printf("Enter the total no.of copies : ");
     scanf("%d",&copies);
@@ -208,10 +208,10 @@ void updateBookdetails()
         {  goto label; }
     }
     else 
-    {   char* line = (char*) malloc( 100*sizeof(char)); 
+    {   char* line = (char*) malloc( 200*sizeof(char)); 
         FILE* fin = fopen("books.txt" , "r");
         FILE* fout = fopen("new.txt" , "w" );
-        while( fgets( line , 100, fin ) != NULL)
+        while( fgets( line , 200, fin ) != NULL)
         {  
             char* temp = strtok(line,",");
                   temp = strtok(NULL , ",");
@@ -250,27 +250,28 @@ void updateBookdetails()
 }
 void listIssuedBooks(){
     printf("---------------FUNCTION----LISTING_ISSUED_BOOKS-----------\n");
-    char* line = (char*)malloc(100*sizeof(char));
+    char* line = (char*)malloc(200*sizeof(char));
     FILE* fin = fopen("books.txt", "r");
     FILE* fout = fopen("write.txt" , "w");
     int num=0;
-    while( fgets(line ,100, fin) != NULL )
+    while( fgets(line ,200, fin) != NULL )
     { 
         int copies; 
         int available ;
-        char book_name[20];
+        char book_name[50];
         char*temp = strtok( line , ",");
         temp = strtok(NULL , ",");
         strcpy(book_name , temp);
-        temp = strtok(NULL,",");
+        char* author_name = strtok(NULL,",");
         temp = strtok(NULL ,",");
         copies = atoi(temp);
         temp = strtok(NULL , ",");
         available = atoi(temp);
         if(copies != available )
-        {  
+        {   
              num++;
-            fprintf(fout , "%s\n", book_name);           
+            if( num ==1 )  printf("%-50s     %-40s\n" , "BOOK_NAME" , "AUTHOR_NAME");
+            fprintf(fout , "%-50s     %-40s\n", book_name , author_name);           
         }
 
     }
@@ -290,7 +291,7 @@ void listIssuedBooks(){
 void display_book_in_library()
 {
     FILE* fptr = fopen("books.txt" , "r");
-    printf("%-15s     %-15s     %-15s     %-15s     %-15s\n" , "BOOK.No" , "BOOK_NAME" , "AUTHOR_NAME" , "TOTAL_NO.COPIES" , "NO.AVAILABLE COPIES");
+    printf("%-10s     %-50s     %-40s     %-15s     %-15s\n" , "BOOK.No" , "BOOK_NAME" , "AUTHOR_NAME" , "TOTAL_NO.COPIES" , "NO.AVAILABLE COPIES");
     char* line = (char*) malloc(100*sizeof(char));
     while( fgets(line , 100 , fptr ) != NULL)
     {
@@ -299,7 +300,7 @@ void display_book_in_library()
           char* author_name = strtok(NULL , ",");
           char* total_copies = strtok(NULL , ",");
           char* available = strtok(NULL , "\n");
-          printf("%-15s     %-15s     %-15s     %-15s     %-15s\n" , temp , book_name, author_name , total_copies , available);
+          printf("%-10s     %-50s     %-40s     %-15s     %-15s\n" , temp , book_name, author_name , total_copies , available);
     }
     fclose(fptr);
     free(line);

@@ -33,9 +33,9 @@ int totalDays(int d, int m, int y) {
 }
 int checkuser( FILE* fptr , char* name, unsigned long hash ) 
 { 
-    char line[100];
+    char line[200];
     int found=0;
-    while( fgets( line , 100 , fptr) != NULL )
+    while( fgets( line , 200 , fptr) != NULL )
     {
         char* temp = strtok( line , ",");
         if( strcmp( temp , name ) == 0 )
@@ -62,9 +62,9 @@ int checkuser( FILE* fptr , char* name, unsigned long hash )
 }
 int checkusrname(FILE* fptr , char* name )
 {
-     char* line = (char*)malloc( 100*sizeof(char) );
+     char* line = (char*)malloc( 200*sizeof(char) );
      int found =0;
-     while(fgets(line , 100, fptr ) != NULL)
+     while(fgets(line , 200, fptr ) != NULL)
      {
         char* temp = strtok(line , ",");
         if( strcmp(temp , name) ==0)
@@ -79,10 +79,10 @@ int checkusrname(FILE* fptr , char* name )
 void listusrfunctions(){
     printf("\nEnter-----\n"
     "(1) to display your user profile\n"
-    "(2) to issue a Book\n"
-    "(3) to return a Book\n"
-    "(4) to check the Availability of a Book\n"
-    "(5) to display_available_books\n"
+    "(2) to display_available_books\n"
+    "(3) to check the Availability of a Book\n"
+    "(4) to issue a Book\n"
+    "(5) to return a Book\n" 
     "(6) to renew a book\n"
     "(7) to display the due books\n"
     "(8) to logout\n"
@@ -93,8 +93,8 @@ void displayuser(char* usrname)
 {      
       printf("\n----------FUNCTION----DISPLAYING_PROFILE----------\n");
       FILE* fptr = fopen("user.txt" , "r");
-      char* line = (char*) malloc(100*sizeof(char));
-      while( fgets(line , 100 , fptr) != NULL)
+      char* line = (char*) malloc(200*sizeof(char));
+      while( fgets(line , 200 , fptr) != NULL)
       {  
          char* temp = strtok(line,",");
          if( strcmp( temp , usrname) == 0)
@@ -110,7 +110,7 @@ void displayuser(char* usrname)
               printf("---------------DISPLAYING THE BOOKS HISTORY--------------\n");
               if( books != 0)
               {
-                  printf("%-15s     %-15s     %-15s     %-15s\n" , "Book_Name" ,"Issued_Date" , "Return_Date" , "FINE");
+                  printf("%-50s     %-40s     %-10s     %-10s\n" , "Book_Name" ,"Issued_Date" , "Return_Date" , "FINE");
                   while( books != 0)
                   {
                      fgets(line , 100, fptr);
@@ -121,10 +121,10 @@ void displayuser(char* usrname)
                      int p_fine = atoi(strtok(NULL,"\n"));
                      if( strcmp(return_date , " " ) == 0)
                     {  
-                        printf("%-15s     %-15s     %-15s     %-15d\n",  temp , issue_date , "-" ,p_fine); }
+                        printf("%-50s     %-40s     %-10s     %-10d\n",  temp , issue_date , "-" ,p_fine); }
                     else 
                     { 
-                        printf("%-15s     %-15s     %-15s     %-15d\n", temp , issue_date , return_date , p_fine);
+                        printf("%-50s     %-40s     %-10s     %-10d\n", temp , issue_date , return_date , p_fine);
                     }
                       books --;
                   }
@@ -132,7 +132,7 @@ void displayuser(char* usrname)
               }
               else 
               {
-                  printf("NO BOOk IS ISSSUED\n"); 
+                  printf("NO BOOK IS ISSSUED\n"); 
               }
          }
       }    
@@ -197,7 +197,7 @@ void issueBook(char* usrname )
     time(&t);
     struct tm* current = localtime(&t); 
     printf("\n-----------FUNCTION------ISSUE_BOOK--------\n");
-    char* line = (char*) malloc ( 100* sizeof(char));
+    char* line = (char*) malloc ( 200* sizeof(char));
     char book_name[50];
     label : 
     printf("Enter the book name : ");
@@ -242,7 +242,7 @@ void issueBook(char* usrname )
     }
     if(canissue != 0)
 {
-    while( fgets(line, 100 , fin  ) != NULL )
+    while( fgets(line, 200 , fin  ) != NULL )
     {
         char* temp = strtok( line , ",");
         fprintf(fout , "%s," , temp);
@@ -291,7 +291,7 @@ if ( canissue != 0)
 if(found == 1 && availability && canissue )
 {   
     fprintf(f2,"%s,%s,%02d-%02d-%04d, ,%d\n" ,usrname,book_name,current->tm_mday,current->tm_mon+1 , current->tm_year + 1900 , 0);
-    while( fgets(line , 100 , f1) != NULL )
+    while( fgets(line , 200 , f1) != NULL )
     {
         fprintf( f2 , "%s", line ); 
     }   
@@ -320,7 +320,7 @@ void returnBook(char* usrname )
     time_t t;
     time(&t);
     struct tm* current = localtime(&t);
-    char* line = (char*) malloc(100*sizeof(char));
+    char* line = (char*) malloc(200*sizeof(char));
     printf("\n----------FUNCION--------RETURN_BOOK--------\n");
     char book_name[50];
     label : 
@@ -348,7 +348,7 @@ void returnBook(char* usrname )
            fprintf(f2, "%s,%s,%d,%d\n" , temp, password , books_issued , fine);
            while( books_issued )
            {
-               fgets(line , 100 , f1 );
+               fgets(line , 200 , f1 );
                char* temp = strtok(line , ",");
                temp = strtok(NULL , ",");
                if( strcmp( temp , book_name ) == 0)
@@ -501,7 +501,7 @@ void updateuserprofile(char* usrname )
     }
      rewind(fptr);
      FILE* fout = fopen("write.txt" , "w");
-     while( fgets(line , 100  , fptr ) != NULL  )
+     while( fgets(line , 200  , fptr ) != NULL  )
      {
         char* temp = strtok(line , ",");
         if( strcmp(temp , usrname ) ==0 )
@@ -509,7 +509,7 @@ void updateuserprofile(char* usrname )
             temp = strtok(NULL , ","); //password
             fprintf( fout , "%s,%s,%d,%d\n" , usrname , temp , books_taken , total_fine );
              while(books_taken )
-              {  fgets(line , 100 , fptr );
+              {  fgets(line , 200 , fptr );
                  char* temp = strtok(line, ",");  //username 
                  temp = strtok(NULL,",");  //book_name
                  char* issue_date = strtok(NULL,",");  
@@ -558,11 +558,11 @@ void updateuserprofile(char* usrname )
 }
 
 void display_available_books(){
-    char* line = (char*)malloc(100*sizeof(char));
+    char* line = (char*)malloc(200*sizeof(char));
     FILE* fptr = fopen("books.txt", "r");
     printf("----------------PRINTING_AVAILABLE_BOOKS----------------\n");
     int book=0;
-    while(fgets(line , 100 , fptr )!= NULL )
+    while(fgets(line , 200 , fptr )!= NULL )
     {   char* temp = strtok(line , ",");
         char* book_name = strtok(NULL , ",");
         char* author_name = strtok(NULL , ",");
@@ -572,9 +572,9 @@ void display_available_books(){
         {   book++;
             if(book == 1 )
             {
-                 printf("%-15s     %-15s\n" , "BOOK_NAME" , "AUTHOR_NAME ");
+                 printf("%-50s     %-40s\n" , "BOOK_NAME" , "AUTHOR_NAME ");
             }
-            printf("%-15s     %-15s\n" , book_name , author_name);  
+            printf("%-50s     %-40s\n" , book_name , author_name);  
         }
     }
     if( book == 0)
@@ -587,7 +587,7 @@ void display_available_books(){
 void renewBook(char* usrname )
 {   printf("------------FUNCTION--------RENEW_BOOK-------------\n");
     char help;
-    char* line = (char*)malloc(100*sizeof(char));
+    char* line = (char*)malloc(200*sizeof(char));
     label :
     scanf("%c", &help);
     time_t t;
@@ -600,7 +600,7 @@ void renewBook(char* usrname )
     int found =0;
     FILE* fptr = fopen("user.txt" , "r");
     FILE* fout = fopen("write.txt" , "w");
-    while( fgets( line , 100 , fptr  ) != NULL )
+    while( fgets( line , 200 , fptr  ) != NULL )
     {
           char* temp = strtok(line , "," );
           char* book = strtok( NULL , ",");
@@ -640,27 +640,27 @@ void displayDueBooks(char* usrname)
 {   printf("--------------FUNCTION--------DISPLAYING_DUE_BOOKS-------\n");
     FILE* fptr = fopen("user.txt","r");
     int value =0;
-    char* line = (char*) malloc(100*sizeof(char));
-    while( fgets(line , 100 , fptr) !=NULL)
+    char* line = (char*) malloc(200*sizeof(char));
+    while( fgets(line , 200 , fptr) !=NULL)
     {
         char* temp = strtok(line  , ",");
         char* passowrd = strtok(NULL , ",");
         int books_taken = atoi(strtok(NULL , ","));
         if( strcmp( temp , usrname ) == 0)
-       { while( books_taken)
+       {   while( books_taken)
         {
-            fgets(line , 100 , fptr );
+            fgets(line , 200 , fptr );
             temp = strtok(line , ",");//usrname 
             char* book = strtok(NULL , ",");
             char* issue_day = strtok(NULL , ",");  //issue_date
             temp = strtok(NULL , ",");  //return_date 
             int fine  = atoi(strtok(NULL , "\n"));  //fine
-            printf("The return date is %s and fine is %d\n", temp , fine );
-            if( strcmp(temp , " ") == 0    && fine != 0)
+        //    printf("The return date is %s and fine is %d\n", temp , fine );
+            if( strcmp(temp , " ") == 0   )
             {
                 if(value == 0)
                 {
-                    printf("%-15s     %-15s     %-15s\n" ,"BOOK_NAME" , "ISSUE_DATE" , "DUE_DATE");
+                    printf("%-50s     %s     %-15s\n" ,"BOOK_NAME" , "ISSUE_DATE" , "DUE_DATE");
                 }
 
                     int issue_date =  atoi(strtok(issue_day , "-") );  
@@ -725,7 +725,7 @@ void displayDueBooks(char* usrname)
                 }
                 else { return_month = issue_month + carry ;    carry=0;}
                 return_year = issue_year + carry ; 
-                printf("%-15s     %02d-%02d-%04d     %02d-%02d-%04d\n" , book , issue_date , issue_month , issue_year , return_date , return_month, return_year);
+                printf("%-50s     %02d-%02d-%04d     %02d-%02d-%04d\n" , book , issue_date , issue_month , issue_year , return_date , return_month, return_year);
                 value ++;
 
             }

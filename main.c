@@ -5,8 +5,8 @@
 #include "fun.h" 
 int main(){
     char usrname [50];
-    char password[10];
-    char password2[10];
+    char password[50];
+    char password2[50];
     int n=1;
     printf("Enter-----\n(1) to login as Admin\n(2) to login as a User\n(3) to sign up\n(4) to exit \n");
     printf("\n");
@@ -43,27 +43,37 @@ int main(){
           if(num ==1 )
           {
              addBook();
+             goto adminmenu;
           }
           else if(num == 2 )
           {
               removeBook();
+              goto adminmenu;
           }
           else if(num == 3 )
           {
               updateBookdetails();
+              goto adminmenu;
           }
           else if(num == 4)
          {
             listIssuedBooks();
+            goto adminmenu;
          }
          else if( num == 5)
          {
             display_book_in_library();
+            goto adminmenu;
          }
-         if(num != 6)
+         else if(num == 6)
          {
-            goto adminmenu ; 
+            //do nothing 
          }   
+         else 
+         {
+            printf("Invalid Entry\n");
+            goto adminmenu;
+         }
 
       }
       fclose(fptr);
@@ -88,42 +98,60 @@ int main(){
       }
       else
       {
-         printf("Hurray you have logged in\n");
+         printf("Hurray! you have logged in\n");
          usrmenu : 
-         updateuserprofile(usrname);
+      
          listusrfunctions();
          int num;
          scanf("%d",&num);
          if(num == 1 )
-         {
+         {  updateuserprofile(usrname);
             displayuser(usrname);
+            goto usrmenu;
          }
-         else if(num == 4 )
+           else if(num == 2 )
          {
-            checkAvailability(); 
-         }
-         else if(num == 2)
-         {
-            issueBook(usrname );
-         }
-         else if( num == 3)
-         {
-            returnBook(usrname);
-         }
-         else if(num == 5 )
-         {
+            updateuserprofile(usrname);
             display_available_books(); 
+            goto usrmenu;
+         }
+         else if(num == 3 )
+         {
+            updateuserprofile(usrname);
+            checkAvailability(); 
+            goto usrmenu;
+         }
+         else if(num == 4)
+         {
+            updateuserprofile(usrname);
+            issueBook(usrname );
+            goto usrmenu;
+         }
+         else if( num == 5)
+         {
+            updateuserprofile(usrname);
+            returnBook(usrname);
+            goto usrmenu;
          }
          else if(num == 6)
          {
+            updateuserprofile(usrname);
             renewBook(usrname);
+            goto usrmenu;
          }
          else if(num == 7)
          {
+            updateuserprofile(usrname);
             displayDueBooks(usrname);
+            goto usrmenu;
          }
-         if(num != 8)
+         else if(num == 8)
          {
+            //do nothing 
+         }
+         else 
+         {
+            printf("Invalid Entry\n");
             goto usrmenu;
          }
       }
