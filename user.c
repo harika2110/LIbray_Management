@@ -3,6 +3,34 @@
 #include<stdlib.h> 
 #include<time.h>
 #include "fun.h"
+int isLeap(int year) {
+    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
+        return 1;
+    return 0;
+}
+
+int daysInMonth(int month, int year) {
+    int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+    if (month == 2 && isLeap(year))
+        return 29;
+
+    return days[month - 1];
+}
+
+int totalDays(int d, int m, int y) {
+    int days = d;
+
+    for (int i = 1; i < m; i++) {
+        days += daysInMonth(i, y);
+    }
+
+    for (int i = 0; i < y; i++) {
+        days += isLeap(i) ? 366 : 365;
+    }
+
+    return days;
+}
 int checkuser( FILE* fptr , char* name, unsigned long hash ) 
 { 
     char line[100];
@@ -334,7 +362,7 @@ void returnBook(char* usrname )
                    return_date = current->tm_mday ;
                    return_month = current->tm_mon+ 1;
                    int return_year = current->tm_year + 1900;
-                   int days = (return_year - issue_year)*356 + (return_month - issue_month)*30 + (return_date - issue_date)*1;
+                   int days = totalDays( return_date , return_month , return_year) - totalDays(issue_date , issue_month , issue_year);
                    late_fine = (days -7 )*5 ;
                    if( late_fine <0) late_fine =0;
                    fprintf( f2 ,"%02d-%02d-%04d,%02d-%02d-%04d,%d\n" , issue_date , issue_month,issue_year , return_date , return_month , return_year, late_fine );
@@ -454,7 +482,7 @@ void updateuserprofile(char* usrname )
                       int p_date =  current->tm_mday;
                       int p_month = current->tm_mon+1;
                       int p_year =  current->tm_year + 1900;
-                      int late_fine = (p_year-i_year)*356 + (p_month-i_month)*30 + (p_date - i_date) ;
+                      int late_fine = totalDays(p_date , p_month , p_year) - totalDays(i_date , i_month , i_year);
                       late_fine = (late_fine - 7)* 5;
                       if( late_fine  > 0)
                       {  
@@ -499,7 +527,7 @@ void updateuserprofile(char* usrname )
                       int p_date =  current->tm_mday;
                       int p_month = current->tm_mon+1;
                       int p_year =  current->tm_year + 1900;
-                      int late_fine = (p_year-i_year)*356 + (p_month-i_month)*30 + (p_date - i_date) ;
+                      int late_fine = totalDays(p_date , p_month , p_year) - totalDays(i_date , i_month , i_year);
                       late_fine = (late_fine - 7)* 5;
                       if( late_fine  < 0)
                       {
@@ -540,13 +568,13 @@ void display_available_books(){
         char* author_name = strtok(NULL , ",");
         char* copies = strtok(NULL , ",");
         char* available = strtok(NULL,"\n" );
-        if( strcmp( available , copies ) != 0)
+        if( strcmp( copies , "0") != 0)
         {   book++;
             if(book == 1 )
             {
-                 printf("%15s     %15s\n" , "BOOK_NAME" , "AUTHOR_NAME ");
+                 printf("%-15s     %-15s\n" , "BOOK_NAME" , "AUTHOR_NAME ");
             }
-            printf("%15s     %15s\n" , book_name , author_name);  
+            printf("%-15s     %-15s\n" , book_name , author_name);  
         }
     }
     if( book == 0)
@@ -618,7 +646,8 @@ void displayDueBooks(char* usrname)
         char* temp = strtok(line  , ",");
         char* passowrd = strtok(NULL , ",");
         int books_taken = atoi(strtok(NULL , ","));
-        while( books_taken)
+        if( strcmp( temp , usrname ) == 0)
+       { while( books_taken)
         {
             fgets(line , 100 , fptr );
             temp = strtok(line , ",");//usrname 
@@ -626,11 +655,12 @@ void displayDueBooks(char* usrname)
             char* issue_day = strtok(NULL , ",");  //issue_date
             temp = strtok(NULL , ",");  //return_date 
             int fine  = atoi(strtok(NULL , "\n"));  //fine
+            printf("The return date is %s and fine is %d\n", temp , fine );
             if( strcmp(temp , " ") == 0    && fine != 0)
             {
                 if(value == 0)
                 {
-                    printf("%-15s      %-15s     %-15s\n" ,"BOOK_NAME" , "ISSUE_DATE" , "DUE_DATE");
+                    printf("%-15s     %-15s     %-15s\n" ,"BOOK_NAME" , "ISSUE_DATE" , "DUE_DATE");
                 }
 
                     int issue_date =  atoi(strtok(issue_day , "-") );  
@@ -638,13 +668,56 @@ void displayDueBooks(char* usrname)
                     int issue_year = atoi(strtok(NULL , "\n"));
                 int carry = 0;
                 int return_date , return_month , return_year; 
-                if( issue_date + 7 + carry > 31)
-                { 
-                    return_date = issue_date + 7 - 31;
-                    carry = 1;
+                if( return_month % 2 !=0  )
+               { 
+                      if( issue_date + 7 + carry > 31)
+                      { 
+                         return_date = issue_date + 7 - 31;
+                        carry = 1;
                     
-                }
-                else {   return_date = issue_date + 7 ;   carry=0;}
+                      }
+                 else {   return_date = issue_date + 7 ;   carry=0;}
+               }
+               else if( return_month != 2 )
+               {
+                     if(  isLeap(issue_year)  )
+                     {
+                          if( issue_date + 7 + carry > 29 )
+                          {
+                             return_date = issue_date + 7 - 29 ;
+                             carry = 1;
+                          }
+                          else 
+                          {
+                              return_date = issue_date + 7 ;   carry=0;       
+                          }
+                     } 
+                     else 
+                     {
+                          if( issue_date + 7 + carry > 28 )
+                          {
+                             return_date = issue_date + 7 - 28 ;
+                             carry = 1;
+                          }
+                          else 
+                          {
+                              return_date = issue_date + 7 ;   carry=0;       
+                          }
+                     }
+
+               }
+               else 
+               {
+                   if( issue_date + 7 + carry > 30)
+                      { 
+                         return_date = issue_date + 7 - 30;
+                        carry = 1;
+                    
+                      }
+                 else {   return_date = issue_date + 7 ;   carry=0;}
+                  
+
+               }
                 if( issue_month + carry > 12 )
                 {
                     return_month = issue_month + 1 - 12;
@@ -652,7 +725,7 @@ void displayDueBooks(char* usrname)
                 }
                 else { return_month = issue_month + carry ;    carry=0;}
                 return_year = issue_year + carry ; 
-                printf("%-15s     %02d-%02d-%04d       %02d-%02d-%04d\n" , book , issue_date , issue_month , issue_year , return_date , return_month, return_year);
+                printf("%-15s     %02d-%02d-%04d     %02d-%02d-%04d\n" , book , issue_date , issue_month , issue_year , return_date , return_month, return_year);
                 value ++;
 
             }
@@ -661,6 +734,7 @@ void displayDueBooks(char* usrname)
         }
         break ; 
     }
+}
     if(value == 0)
     {
         printf("There are no due books\n"); 

@@ -20,3 +20,7 @@ void display_available_books(); //done
 void displayDueBooks(char* usrname);  //done
 void listusrfunctions();  //done
 void renewBook(char* usrname); //done 
+int isLeap(int year);
+int daysInMonth(int month , int year);
+int totaldays(int d , int m , int y);
+void display_book_in_library();

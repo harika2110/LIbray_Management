@@ -56,7 +56,11 @@ int main(){
          {
             listIssuedBooks();
          }
-         if(num != 5)
+         else if( num == 5)
+         {
+            display_book_in_library();
+         }
+         if(num != 6)
          {
             goto adminmenu ; 
          }   

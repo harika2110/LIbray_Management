@@ -38,7 +38,8 @@ void listadminfunctions(){
     "(2) to remove any Book\n"
     "(3) to update details of any Book\n"
     "(4) to list Issued Books ( in alphabetical order )\n"
-    "(5) to logout\n"
+    "(5) to display the details of books in library\n"
+    "(6) to logout\n"
      );
     return ; 
    
@@ -285,4 +286,21 @@ void listIssuedBooks(){
     }
     free(line);
     return ; 
+}
+void display_book_in_library()
+{
+    FILE* fptr = fopen("books.txt" , "r");
+    printf("%-15s     %-15s     %-15s     %-15s     %-15s\n" , "BOOK.No" , "BOOK_NAME" , "AUTHOR_NAME" , "TOTAL_NO.COPIES" , "NO.AVAILABLE COPIES");
+    char* line = (char*) malloc(100*sizeof(char));
+    while( fgets(line , 100 , fptr ) != NULL)
+    {
+          char* temp = strtok(line ,",");
+          char* book_name = strtok(NULL ,",");
+          char* author_name = strtok(NULL , ",");
+          char* total_copies = strtok(NULL , ",");
+          char* available = strtok(NULL , "\n");
+          printf("%-15s     %-15s     %-15s     %-15s     %-15s\n" , temp , book_name, author_name , total_copies , available);
+    }
+    fclose(fptr);
+    free(line);
 }
