@@ -1,2 +1,0 @@
-Changes need to made ----   correct the fine calculation and dates calculation
-                     ----   Add README
