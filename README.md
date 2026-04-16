@@ -33,7 +33,7 @@ Steps:
 1.Install a compatible environment like: MinGW or WSL
 2.Download and set up ncurses
 3.Compile the code using gcc with ncurses linked:
-   gcc your_file.c -lncurses
+   gcc main.c user.c admin.c -lncurses
 
 Note :
 Ensure ncurses is properly installed, otherwise the program will not run.
