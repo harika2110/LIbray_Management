@@ -24,12 +24,12 @@ void loginpassword( char* password , char* password2 , int j)
     while (1)
     {
         ch = getch();
-        // ENTER key
+        // enter key
         if (ch == '\n')
         {
             break;
         }
-        // BACKSPACE handling
+        // backspace handling
         else if (ch == 127 || ch == KEY_BACKSPACE)
         {
             if (i > 0)
@@ -53,12 +53,12 @@ void loginpassword( char* password , char* password2 , int j)
          while (1)
       {
            ch = getch();
-           // ENTER key
+           // enter key
            if (ch == '\n')
             {
                  break;
             }
-           // BACKSPACE handling
+           // backspace  handling
            else if (ch == 127 || ch == KEY_BACKSPACE)
          {
                if (i > 0)

@@ -14,8 +14,8 @@ int checkadmin( FILE* fptr , char* name, unsigned long hash )
             unsigned long number ;
             temp = strtok(NULL , "\n");
             sscanf( temp , "%lu", &number);
-            if( number == hash ) 
-            {
+            if( number == hash ) //checking if  the passwords match
+            {   
                 found = 1;
             }
             else found =0;

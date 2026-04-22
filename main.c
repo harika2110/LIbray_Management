@@ -13,17 +13,17 @@ int main(){
     scanf("%d", &n); 
   while( n!= 4 ) 
 { 
-     clearing(usrname );
+     clearing(usrname );   // clearing if anything is stored in usrname 
      clearing(password);
      if( n==1) //admin login
    { 
       int j=1;
-      loginusrname(usrname );
+      loginusrname(usrname );  // taking input of usrname  
       initscr();
-      clear();
-      loginpassword( password ,password2 , j );
+      clear();   
+      loginpassword( password ,password2 , j );  //taking input of password 
       endwin(); 
-      unsigned long hash = hashPassword( password); 
+      unsigned long hash = hashPassword( password);  // converting password using hash
        FILE* fptr = fopen("admin.txt" , "r");
       if( ! checkadmin ( fptr , usrname , hash ) ) 
       {    
@@ -81,12 +81,12 @@ int main(){
    if(n==2) //usr login
    {  
       int j=1;
-      loginusrname(usrname);
+      loginusrname(usrname);   // taking usr input 
       initscr();
       clear();
-      loginpassword(password , password2 ,j);
+      loginpassword(password , password2 ,j); //password input 
       endwin();
-      unsigned long hash = hashPassword( password); 
+      unsigned long hash = hashPassword( password);  // converting passwd into hash
       FILE* fptr = fopen("user.txt", "r" );
       if( !checkuser( fptr , usrname , hash ))
       {  
