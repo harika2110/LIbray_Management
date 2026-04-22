@@ -1,2 +1,0 @@
-Clean Code                                             Robert C. Martin                        
-Code Complete                                          Steve McConnell                         

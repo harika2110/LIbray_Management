@@ -2,3 +2,5 @@ ananya,6385048801,1,0
 ananya,Code Complete,16-04-2026, ,0
 tvisha,6954072687604,1,0
 tvisha,Clean Code,16-04-2026, ,0
+Harika,13827598666936256991,1,0
+Harika,Clean Code,22-04-2026, ,0
