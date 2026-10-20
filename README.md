@@ -34,10 +34,14 @@ The provided Makefile works directly on Linux.
    ```bash
    make
 3. Execute the program : 
+
+  ```bash
    ./a.out 
 
-4. To remove all the .o files created run the      following command :
-make clean
+4. To remove all the .o files created run the following command :
+  
+  ```bash
+  make clean
 
 ### Running on Windows
 
@@ -46,8 +50,12 @@ You need to install the ncurses library manually.
 ### Steps:
 
 1. Install a compatible environment like: MinGW or WSL
+
 2. Download and set up ncurses
+
 3. Compile the code using gcc with ncurses linked:
+  
+  ```bash
    gcc main.c user.c admin.c -lncurses
 
 Note :
