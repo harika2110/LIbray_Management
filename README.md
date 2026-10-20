@@ -58,7 +58,7 @@ You need to install the ncurses library manually.
   ```bash
    gcc main.c user.c admin.c -lncurses
 
-Note :
+### Note :
 
   Ensure ncurses is properly installed, otherwise the program will not run.
 
