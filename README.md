@@ -41,7 +41,7 @@ The provided Makefile works directly on Linux.
 4. To remove all the .o files created run the following command :
   
   ```bash
-  make clean
+    make clean
 
 ### Running on Windows
 
