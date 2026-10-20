@@ -1,0 +1,3 @@
+Clean Code                                             Robert C. Martin                        
+Design Patterns                                        Erich Gamma                             
+Code Complete                                          Steve McConnell                         
