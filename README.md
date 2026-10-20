@@ -35,8 +35,8 @@ The provided Makefile works directly on Linux.
    make
 3. Execute the program : 
 
-  ```bash
-   ./a.out 
+   ```bash
+   ./a.out
 
 4. To remove all the .o files created run the following command :
   
