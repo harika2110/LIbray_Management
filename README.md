@@ -56,7 +56,7 @@ You need to install the ncurses library manually.
 3. Compile the code using gcc with ncurses linked:
   
   ```bash
-  gcc main.c user.c admin.c -lncurses
+   gcc main.c user.c admin.c -lncurses
 
 Note :
 
