@@ -1,42 +1,57 @@
                                                                       Mini Library Management Project
 
-This is a simple Library Management System implemented in C.
-It supports basic functionalities for managing books, users, and admin operations.
+# Mini Library Management Project
 
-Admin Credentials :
+This is a simple Library Management System implemented in C. It supports basic functionalities for managing books, users, and admin operations.
+
+## Admin Credentials
+
 Use the following credentials to log in as an admin:
-Username: CS25B087
-Password: CS1234
 
+- **Username:** CS25B087
+- **Password:** CS1234
 
-Features :
-Separate roles for Admin and Users
-Book management (issue, return, availability tracking)
-Simple terminal-based interface
+## Features
 
-Requirements :
-C Compiler (e.g., gcc)
-ncurses library (required for UI)
+- Separate roles for Admin and Users
+- Book management (issue, return, and availability tracking)
+- Simple terminal-based interface
 
-Running on Linux :
+## Requirements
+
+- C Compiler (e.g., GCC)
+- ncurses library (required for the UI)
+
+## Running on Linux
+
 The provided Makefile works directly on Linux.
-Steps:
-1.Open terminal in the project directory
-2.Run:
-  make
-3.Execute the program:
-./a.out
-4.To remove all the .o files created run the command :
+
+### Steps
+
+1. Open a terminal in the project directory.
+2. Run the following command:
+
+   ```bash
+   make
+3. Execute the program : 
+   ./a.out 
+
+4. To remove all the .o files created run the      following command :
 make clean
 
-Running on Windows
+### Running on Windows
+
 You need to install the ncurses library manually.
-Steps:
-1.Install a compatible environment like: MinGW or WSL
-2.Download and set up ncurses
-3.Compile the code using gcc with ncurses linked:
+
+### Steps:
+
+1. Install a compatible environment like: MinGW or WSL
+2. Download and set up ncurses
+3. Compile the code using gcc with ncurses linked:
    gcc main.c user.c admin.c -lncurses
 
 Note :
-Ensure ncurses is properly installed, otherwise the program will not run.
+
+  Ensure ncurses is properly installed, otherwise the program will not run.
+
 The project is designed primarily for Linux environments.
